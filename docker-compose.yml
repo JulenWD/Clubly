@@ -1,0 +1,27 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5174:5174"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb+srv://julenalonsorodero:1234@cluster0.tlb2w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+
