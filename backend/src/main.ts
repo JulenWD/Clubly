@@ -7,6 +7,9 @@ import { ValidationPipe, Logger } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Middleware RAW para Stripe Webhook (debe ir antes de cualquier body parser)
+  app.use('/pagos/webhook', raw({ type: '*/*' }));
+
   // CORS dinámico para todos los subdominios de Vercel y localhost
   app.enableCors({
     origin: (origin, callback) => {
@@ -36,7 +39,7 @@ async function bootstrap() {
   });
 
   app.use(cookieParser());
-  app.use('/pagos/webhook', raw({ type: '*/*' }));
+  // Body parser JSON para el resto de rutas
   app.use(json());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
 

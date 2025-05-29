@@ -34,7 +34,11 @@ export class PagosController {
     ) {
         const endpointSecret = this.configService.get<string>('STRIPE_WEBHOOK_SECRET');
         const rawBody = req.body;
-
+        if (!Buffer.isBuffer(rawBody)) {
+            console.error('El body recibido en el webhook NO es un Buffer. Esto causará fallo de firma Stripe.');
+        } else {
+            console.log('El body recibido en el webhook es un Buffer.');
+        }
         let event: Stripe.Event;
 
         try {
@@ -43,6 +47,7 @@ export class PagosController {
                 signature,
                 endpointSecret,
             );
+            console.log('Webhook recibido de Stripe:', event.type, JSON.stringify(event.data.object));
         } catch (err) {
             console.error('Error verificando webhook de Stripe:', err.message);
             return { error: 'Invalid webhook signature', status: 'failed' };
@@ -52,13 +57,14 @@ export class PagosController {
             console.log('Evento de Stripe ignorado:', event.type);
             return { received: true };
         }
-            
-        const session = event.data.object as Stripe.Checkout.Session;        
+
+        const session = event.data.object as Stripe.Checkout.Session;
         const sessionData = {
             id: session.id,
             metadata: session.metadata,
             customerEmail: session.customer_email
         };
+        console.log('Datos de la sesión de Stripe:', sessionData);
 
         const eventoId = session.metadata?.eventoId;
         const tipoEntrada = session.metadata?.tipoEntrada;
@@ -68,22 +74,25 @@ export class PagosController {
             const error = 'Faltan datos requeridos en el evento de Stripe';
             console.error(error, { eventoId, tipoEntrada, usuarioEmail });
             return { error, received: false };
-        }        try {            const entradaRegistrada = await this.pagosService.registrarEntradaExitosa(
+        }
+        try {
+            const entradaRegistrada = await this.pagosService.registrarEntradaExitosa(
                 usuarioEmail,
                 eventoId,
                 tipoEntrada,
             );
-            return { 
-                received: true, 
+            console.log('Resultado de registrarEntradaExitosa:', entradaRegistrada);
+            return {
+                received: true,
                 success: true,
                 entradaId: entradaRegistrada?._id || null
             };
         } catch (err) {
             console.error('Error en registrarEntradaExitosa:', err);
-            return { 
+            return {
                 error: 'Error al registrar la entrada',
                 details: err.message,
-                received: true, 
+                received: true,
                 success: false
             };
         }
