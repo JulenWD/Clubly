@@ -84,7 +84,8 @@ export class PagoService {
             djNombre = evento.djIds.map((dj: any) => dj.nombre).join(', ');
         }
 
-        const cancelUrl = `http://localhost:5173/pago-cancelado?evento=${encodeURIComponent(evento.nombre)}`;
+        const frontendUrl = this.configService.get<string>('FRONTEND_URL') || 'http://localhost:5173';
+        const cancelUrl = `${frontendUrl}/pago-cancelado?evento=${encodeURIComponent(evento.nombre)}`;
 
         const sesion = await this.stripe.checkout.sessions.create({
             payment_method_types: ['card'],
@@ -107,7 +108,7 @@ export class PagoService {
                 clubId: (evento.clubId as any)._id?.toString?.() || '',
                 tipoEntrada: tipoEntrada,
             },
-            success_url: `http://localhost:5173/compra-exitosa?evento=${encodeURIComponent(evento.nombre || '')}`,
+            success_url: `${frontendUrl}/compra-exitosa?evento=${encodeURIComponent(evento.nombre || '')}`,
             cancel_url: cancelUrl,
         });
 
