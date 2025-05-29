@@ -9,4 +9,9 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+  @Get('test-root')
+  testRoot() {
+    console.log('Entrando en testRoot');
+    return { test: 'root ok' };
+  }
 }

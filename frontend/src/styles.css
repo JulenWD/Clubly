@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-primary: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-accent: 'Permanent Marker', cursive;
+  
+  --primary-color: #d946ef;
+  --primary-dark: #a21caf;
+  --primary-light: #f0abfc;
+  
+  --primary-purple: #6d28d9;
+  --primary-purple-light: #8b5cf6;
+  --secondary-pink: #db2777;
+  --secondary-pink-light: #ec4899;
+  
+  --background-dark: #000000;
+  --background-gradient: linear-gradient(to bottom, #0f0514, #170a26, #000000);
+  --background-slate: #0f172a;
+  --background-slate-light: #1e293b;
+  
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-slate: #f8fafc;
+  --text-slate-secondary: #cbd5e1;
+  
+  --accent-color: #f0abfc;
+  --border-color: #334155;
+  
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.5);
+  --shadow-neon: 0 0 15px var(--accent-color);
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  line-height: 1.5;
+  font-family: var(--font-primary);
+  font-weight: 400;
+  background: var(--background-dark);
+  background-image: var(--background-gradient);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+.btn-primary {
+  background-image: linear-gradient(to right, #d946ef, #c026d3);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background-image: linear-gradient(to right, #e879f9, #d946ef);
+}
+
+.btn-outline {
+  border: 1px solid #d946ef;
+  color: #d946ef;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+}
+
+.btn-outline:hover {
+  background-color: rgba(217, 70, 239, 0.1);
+}
+
+.neon-fuchsia {
+  color: #ff00ea;
+  text-shadow: 0 0 8px #ff00ea, 0 0 16px #ff00ea, 0 0 32px #ff00ea;
+}
+
+.font-handwritten {
+  font-family: 'Permanent Marker', cursive;
+  letter-spacing: 1px;
+}
+
+.clubly-gradient-bg {
+  background-image: linear-gradient(135deg, #0f0514 0%, #170a26 50%, #000000 100%);
+}
+
+.clubly-card {
+  background-color: var(--background-slate-light);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.clubly-card:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #d946ef, #f0abfc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+input, select, textarea {
+  background-color: rgba(31, 31, 31, 0.8);
+  border: 1px solid #333;
+  color: white;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(217, 70, 239, 0.3);
+}
+
+.bg-gradient-club {
+  background: linear-gradient(135deg, rgba(162, 28, 175, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color); }
+  50% { box-shadow: 0 0 15px var(--primary-color), 0 0 20px var(--primary-color); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+.pulse {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.glow {
+  animation: glow 2s infinite ease-in-out;
+}
+
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(217, 70, 239, 0.4);
+}
+
+.clubly-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+}
+
+.clubly-button:hover {
+  background-color: var(--primary-light);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.5rem;
+  }
+}
