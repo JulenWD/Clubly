@@ -9,11 +9,13 @@ async function bootstrap() {
 
   app.enableCors({
     origin: [
-      'https://clubly-p2t0087v8-julens-projects-2e33d71b.vercel.app', // tu frontend en Vercel
-      'http://localhost:5173' // para desarrollo local, si quieres
+      'https://clubly-pdko9apjj-julens-projects-2e33d71b.vercel.app',
+      'https://clubly-p2t0087v8-julens-projects-2e33d71b.vercel.app',
+      'http://localhost:5173'
     ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type,Authorization',
   });
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
