@@ -5,15 +5,20 @@ import { json, raw } from 'express';
 import { ValidationPipe, Logger } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // Desactiva el bodyParser global de NestJS
+  const app = await NestFactory.create(AppModule, {
+    bodyParser: false,
+  });
 
-  // Middleware RAW para Stripe Webhook (debe ir antes de cualquier body parser)
+  // Middleware RAW solo para Stripe Webhook
   app.use('/pagos/webhook', raw({ type: '*/*' }));
 
-  // Body parser JSON para el resto de rutas (debe ir después del raw)
-  app.use(json());
+  // Body parser JSON para el resto de rutas
+  app.use((req, res, next) => {
+    if (req.originalUrl === '/pagos/webhook') return next();
+    json()(req, res, next);
+  });
 
-  // CORS dinámico para todos los subdominios de Vercel y localhost
   app.enableCors({
     origin: (origin, callback) => {
       const allowedOrigins = [
@@ -44,21 +49,6 @@ async function bootstrap() {
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
 
-  await app.listen(process.env.PORT ?? 3000, async () => {
-    // Deshabilita el bodyParser de NestJS SOLO para la ruta del webhook
-    const httpAdapter = app.getHttpAdapter();
-    if (httpAdapter && httpAdapter.getInstance) {
-      const instance = httpAdapter.getInstance();
-      if (instance && instance._router && instance._router.stack) {
-        instance._router.stack.forEach((layer) => {
-          if (layer?.route?.path === '/pagos/webhook') {
-            layer.route.stack.forEach((routeLayer) => {
-              routeLayer.handle.bodyParser = false;
-            });
-          }
-        });
-      }
-    }
-  });
+  await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
