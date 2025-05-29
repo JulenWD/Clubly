@@ -44,6 +44,21 @@ async function bootstrap() {
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3000, async () => {
+    // Deshabilita el bodyParser de NestJS SOLO para la ruta del webhook
+    const httpAdapter = app.getHttpAdapter();
+    if (httpAdapter && httpAdapter.getInstance) {
+      const instance = httpAdapter.getInstance();
+      if (instance && instance._router && instance._router.stack) {
+        instance._router.stack.forEach((layer) => {
+          if (layer?.route?.path === '/pagos/webhook') {
+            layer.route.stack.forEach((routeLayer) => {
+              routeLayer.handle.bodyParser = false;
+            });
+          }
+        });
+      }
+    }
+  });
 }
 bootstrap();
