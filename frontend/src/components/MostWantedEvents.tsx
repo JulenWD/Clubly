@@ -228,7 +228,7 @@ export default function MostWantedEvents(): React.ReactElement {
         const api = user ? authAxios : axios;
         
         // Usar el baseURL correcto para la petición
-        const apiUrl = import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        const apiUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
         const response = await api.get(`${apiUrl}/eventos-destacados/ciudad/${ciudadEncoded}`);
         
         console.log('Respuesta del backend eventos destacados:', response.data);
@@ -295,7 +295,7 @@ export default function MostWantedEvents(): React.ReactElement {
       const api = user ? authAxios : axios;
       
       // Usar el baseURL correcto para la petición
-      const apiUrl = import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      const apiUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
       
       // Crear un objeto para almacenar los eventos actualizados
       const eventosMap: Record<string, EventoExtendido> = {};
@@ -528,7 +528,7 @@ export default function MostWantedEvents(): React.ReactElement {
                     <div className="absolute" style={{top: -30, right: -30, transform: 'rotate(-15deg)'}}>
                       <Icon icon="f7:scope" className="text-[80px]" style={{color: '#00eaff', filter: 'drop-shadow(0 0 16px #00eaff)'}} />
                     </div>
-                  )}                  {/* Cartel del evento como imagen con efecto vintage */}                  
+                  )}                                   
                   <div 
                     className="w-full h-52 rounded-md overflow-hidden mb-3 border-2 relative cursor-pointer" 
                     style={{
