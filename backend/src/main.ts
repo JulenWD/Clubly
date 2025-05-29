@@ -7,30 +7,24 @@ import { ValidationPipe, Logger } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Logging de origen para debug CORS
-  app.use((req, res, next) => {
-    Logger.log(`CORS request from origin: ${req.headers.origin}`);
-    next();
-  });
-
+  // CORS dinámico para todos los subdominios de Vercel y localhost
   app.enableCors({
-    origin: [
-      'https://clubly-pdko9apjj-julens-projects-2e33d71b.vercel.app',
-      'https://clubly-p2t0087v8-julens-projects-2e33d71b.vercel.app',
-      'https://clubly-3lmkn7v7f-julens-projects-2e33d71b.vercel.app', // NUEVO dominio Vercel
-      'http://localhost:5173'
-    ],
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        'http://localhost:5173',
+      ];
+      // Permite cualquier subdominio de clubly en vercel.app
+      const vercelRegex = /^https:\/\/clubly-[a-z0-9-]+-julens-projects-2e33d71b\.vercel\.app$/;
+      if (!origin || allowedOrigins.includes(origin) || vercelRegex.test(origin)) {
+        callback(null, true);
+      } else {
+        Logger.warn(`CORS blocked for origin: ${origin}`);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
-    allowedHeaders: [
-      'Content-Type',
-      'Authorization',
-      'X-Requested-With',
-      'Accept',
-      'Origin',
-      'Access-Control-Allow-Credentials',
-      'Access-Control-Allow-Origin'
-    ],
+    allowedHeaders: '*',
     preflightContinue: false,
     optionsSuccessStatus: 204
   });
@@ -38,7 +32,6 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use('/pagos/webhook', raw({ type: '*/*' }));
   app.use(json());
-
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
 
   await app.listen(process.env.PORT ?? 3000);
