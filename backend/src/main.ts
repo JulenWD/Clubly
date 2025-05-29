@@ -17,6 +17,7 @@ async function bootstrap() {
     origin: [
       'https://clubly-pdko9apjj-julens-projects-2e33d71b.vercel.app',
       'https://clubly-p2t0087v8-julens-projects-2e33d71b.vercel.app',
+      'https://clubly-3lmkn7v7f-julens-projects-2e33d71b.vercel.app', // NUEVO dominio Vercel
       'http://localhost:5173'
     ],
     credentials: true,
