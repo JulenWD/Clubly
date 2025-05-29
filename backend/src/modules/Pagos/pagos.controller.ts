@@ -35,7 +35,7 @@ export class PagosController {
         const endpointSecret = this.configService.get<string>('STRIPE_WEBHOOK_SECRET');
         const rawBody = req.body;
         if (!Buffer.isBuffer(rawBody)) {
-            console.error('El body recibido en el webhook NO es un Buffer. Esto causará fallo de firma Stripe.');
+            console.error('El body recibido en el webhook NO es un Buffer. Esto causará fallo de firma Stripe. Tipo:', typeof rawBody);
         } else {
             console.log('El body recibido en el webhook es un Buffer.');
         }

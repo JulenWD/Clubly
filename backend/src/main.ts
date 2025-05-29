@@ -10,6 +10,9 @@ async function bootstrap() {
   // Middleware RAW para Stripe Webhook (debe ir antes de cualquier body parser)
   app.use('/pagos/webhook', raw({ type: '*/*' }));
 
+  // Body parser JSON para el resto de rutas (debe ir después del raw)
+  app.use(json());
+
   // CORS dinámico para todos los subdominios de Vercel y localhost
   app.enableCors({
     origin: (origin, callback) => {
@@ -39,8 +42,6 @@ async function bootstrap() {
   });
 
   app.use(cookieParser());
-  // Body parser JSON para el resto de rutas
-  app.use(json());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
 
   await app.listen(process.env.PORT ?? 3000);
