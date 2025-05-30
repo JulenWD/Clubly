@@ -369,69 +369,79 @@ export default function MostWantedEvents(): React.ReactElement {
     }
   };
 
+  // Generar posiciones fijas para los iconos de fuego (no aleatorias en cada render)
+  const fireIconsTop = Array.from({ length: 30 }, (_, i) => ({
+    left: `${(i * 3) % 90}%`,
+    top: `${(i * 7) % 40}%`,
+    fontSize: `${38 + (i % 5) * 10}px`,
+    color: [
+      '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff'
+    ][i % 10],
+    opacity: 0.8,
+    zIndex: 1
+  }));
+  const fireIconsBottom = Array.from({ length: 30 }, (_, i) => ({
+    left: `${(i * 3.3) % 90}%`,
+    bottom: `${(i * 5.7) % 18}%`,
+    fontSize: `${42 + (i % 6) * 10}px`,
+    color: [
+      '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff'
+    ][i % 10],
+    opacity: 0.9,
+    zIndex: 2
+  }));
+  const fireIconsMobile = Array.from({ length: 20 }, (_, i) => ({
+    left: `${(i * 4.5) % 90}%`,
+    bottom: `${(i * 6.2) % 25}%`,
+    fontSize: `${22 + (i % 4) * 8}px`,
+    color: [
+      '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff'
+    ][i % 10],
+    opacity: 0.8,
+    zIndex: 2
+  }));
+
   return (
     <section className="w-full max-w-7xl mx-auto px-2 md:px-6 py-8 relative overflow-x-hidden overscroll-x-none" style={{overflowX: 'hidden'}}>
       {/* Fondo decorativo SOLO para MostWantedEvents */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none max-w-full overflow-x-hidden" style={{overflowX: 'hidden'}}>
         {/* Fondo de llamas */}
         <div className="w-full h-full bg-[url('/llamas-bg.svg')] bg-cover bg-center opacity-30 max-w-full overflow-x-hidden" style={{overflowX: 'hidden'}} />
-        {/* MUCHOS iconos de fuego decorativos, de diferentes colores neón y tamaños, especialmente en la parte inferior y en posiciones caóticas */}
-        {/* Desktop: */}
-        {[...Array(30)].map((_, i) => (
+        {/* Iconos de fuego con posiciones FIJAS */}
+        {fireIconsTop.map((style, i) => (
           <Icon
             key={`fire-top-${i}`}
             icon="mdi:fire"
-            className={`hidden md:block absolute animate-pulse select-none pointer-events-none`}
-            style={{
-              left: `${Math.random() * 90}%`,
-              top: `${Math.random() * 40}%`,
-              fontSize: `${28 + Math.random() * 60}px`,
-              color: [
-                '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff', '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff'
-              ][Math.floor(Math.random() * 20)],
-              opacity: 0.7 + Math.random() * 0.3,
-              zIndex: 1
-            }}
+            className="hidden md:block absolute animate-pulse select-none pointer-events-none"
+            style={style}
           />
         ))}
-        {[...Array(30)].map((_, i) => (
+        {fireIconsBottom.map((style, i) => (
           <Icon
             key={`fire-bottom-${i}`}
             icon="mdi:fire"
-            className={`hidden md:block absolute animate-pulse select-none pointer-events-none`}
-            style={{
-              left: `${Math.random() * 90}%`,
-              bottom: `${Math.random() * 18}%`,
-              fontSize: `${32 + Math.random() * 70}px`,
-              color: [
-                '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff', '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff'
-              ][Math.floor(Math.random() * 20)],
-              opacity: 0.8 + Math.random() * 0.2,
-              zIndex: 2
-            }}
+            className="hidden md:block absolute animate-pulse select-none pointer-events-none"
+            style={style}
           />
         ))}
-        {/* Móvil: */}
-        {[...Array(20)].map((_, i) => (
+        {fireIconsMobile.map((style, i) => (
           <Icon
             key={`fire-mobile-${i}`}
             icon="mdi:fire"
-            className={`md:hidden absolute animate-pulse select-none pointer-events-none`}
-            style={{
-              left: `${Math.random() * 90}%`,
-              bottom: `${Math.random() * 25}%`,
-              fontSize: `${18 + Math.random() * 40}px`,
-              color: [
-                '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff', '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff'
-              ][Math.floor(Math.random() * 20)],
-              opacity: 0.7 + Math.random() * 0.3,
-              zIndex: 2
-            }}
+            className="md:hidden absolute animate-pulse select-none pointer-events-none"
+            style={style}
           />
         ))}
       </div>
       <div className="relative z-10 max-w-full overflow-x-hidden" style={{overflowX: 'hidden'}}>
-        <h2 className="text-2xl md:text-3xl font-bold neon-fuchsia mb-6 text-center">Eventos Destacados</h2>
+        {/* Nuevo título tipo banner */}
+        <div className="flex flex-col items-center mb-6">
+          <h2 className="text-4xl md:text-5xl font-extrabold neon-fuchsia font-display tracking-widest text-center drop-shadow-lg uppercase">THE MOST WANTED EVENTS</h2>
+          <div className="w-32 h-1 bg-gradient-to-r from-fuchsia-500 to-purple-800 my-4 rounded-full" />
+          <div className="text-lg md:text-xl font-semibold text-fuchsia-300 font-display text-center drop-shadow mb-2">
+            {ciudad ? ciudad : 'Tu ciudad'}
+          </div>
+        </div>
         <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 md:justify-center md:items-end overflow-x-hidden overscroll-x-none max-w-full scrollbar-hide" style={{overflowX: 'hidden', maxWidth: '100%'}}>
           {/* Mostrar mensaje personalizado o eventos */}
           {loading ? (
