@@ -16,7 +16,7 @@ export default function DjCard({ dj }: { dj: any }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-purple-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none rounded-l-lg"></div>
                 <div className="w-[150px] h-[150px] rounded-full overflow-hidden border-4 border-fuchsia-700/30 group-hover:border-fuchsia-500/50 transition-all duration-500 shadow-lg shadow-fuchsia-900/30">
                     <img
-                        src={dj.fotoPerfil || "/default-profile.png"}
+                        src={dj.fotoPerfil || "/user-dark.svg"}
                         alt={`Foto de perfil de ${dj.nombre}`}
                         className="h-full w-full object-cover group-hover:scale-105 transition-all duration-700 ease-in-out"
                         style={{ objectPosition: 'center center', objectFit: 'cover' }}

@@ -80,7 +80,7 @@ export default function DjPerfilPage() {
                                 <div className="flex flex-col md:flex-row items-center gap-8">
                                     <div className="w-48 h-48 rounded-full border-4 border-fuchsia-700/50 shadow-lg shadow-fuchsia-800/20 overflow-hidden relative flex-shrink-0">
                                         <img
-                                            src={dj.avatarUrl || dj.fotoPerfil || "/default-profile.png"}
+                                            src={dj.avatarUrl || dj.fotoPerfil || "/user-dark.svg"}
                                             alt={`Foto de perfil de ${dj.nombre}`}
                                             className="w-full h-full object-cover"
                                         />

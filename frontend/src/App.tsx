@@ -32,7 +32,7 @@ export default function App() {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Layout><LoginPage /></Layout>} />
+                <Route path="/" element={<Layout><HomePage /></Layout>} />
                 <Route path="/register" element={<Layout><RegisterPage /></Layout>} />
                 <Route path="/login" element={<Layout><LoginPage /></Layout>} />
                 <Route path="/home" element={<Layout><HomePage /></Layout>} />

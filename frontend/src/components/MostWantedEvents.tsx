@@ -472,7 +472,7 @@ export default function MostWantedEvents(): React.ReactElement {
   };
 
   return (
-    <section className="relative w-full py-16 overflow-visible">
+    <section className="w-full max-w-7xl mx-auto px-2 md:px-6 py-8">
       {/* Fondo con textura sutil */}
       <div className="absolute inset-0 z-0 bg-black/90">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMjIyIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=')] opacity-20"></div>
@@ -521,7 +521,8 @@ export default function MostWantedEvents(): React.ReactElement {
         </div>
         
         {/* Contenedor de tarjetas con mejor espaciado */}
-        <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch relative px-4 mt-8">          {/* Mostrar mensaje personalizado o eventos */}
+        <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 overflow-x-auto scrollbar-hide">
+          {/* Mostrar mensaje personalizado o eventos */}
           {loading ? (
             <div className="text-center w-full py-16">
               <div className="inline-block w-12 h-12 border-4 border-fuchsia-600 border-t-transparent rounded-full animate-spin"></div>
@@ -536,23 +537,8 @@ export default function MostWantedEvents(): React.ReactElement {
               return evento && evento._id ? (
                 <div
                   key={evento._id}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigateWithLogging(navigate, `/eventos/${evento._id}`, evento._id);
-                  }}
-                  className="relative bg-gradient-to-b from-black/90 to-black/70 rounded-lg p-3 flex flex-col items-center shadow-2xl group hover:shadow-[0_0_25px_#ff00ea] hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-                  style={{
-                    transform: `rotate(${CARD_ROTATIONS[idx % CARD_ROTATIONS.length]}deg)`,
-                    borderImage: 'linear-gradient(45deg, #a21caf, #ff00ea, #a21caf) 1',
-                    borderWidth: '2px',
-                    borderStyle: 'solid',
-                    boxShadow: `0 0 20px 2px rgba(162, 28, 175, 0.4), inset 0 0 20px rgba(255, 0, 234, 0.1)`,
-                    minWidth: 200,
-                    maxWidth: 220,
-                    flex: 1,
-                    backdropFilter: 'blur(2px)',
-                    transition: 'all 0.3s ease'
-                  }}
+                  className="min-w-[90vw] max-w-[95vw] md:min-w-[300px] md:max-w-[350px] bg-gradient-to-b from-black/90 to-black/70 rounded-lg p-3 flex flex-col items-center shadow-2xl group hover:shadow-[0_0_25px_#ff00ea] hover:-translate-y-1 transition-all duration-300 cursor-pointer mx-auto md:mx-0"
+                  style={{ marginBottom: 16 }}
                 >
                   {/* Sello de "WANTED" */}
                   <div className="absolute top-2 right-2 rotate-12 opacity-80">

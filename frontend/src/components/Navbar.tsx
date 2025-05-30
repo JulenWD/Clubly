@@ -56,25 +56,29 @@ const Navbar = () => {
         switch (user.rol) {
             case "usuario":
                 return [
+                    { label: "Inicio", href: "/home" },
                     { label: "Eventos", href: "/eventos" },
-                    { label: "Mis entradas", href: "/mis-entradas" },
+                    { label: "Mis entradas", href: "/dashboard" },
                     { label: "Discotecas", href: "/clubs" },
                     { label: "DJs", href: "/djs" },
                 ];
             case "dj":
                 return [
+                    { label: "Inicio", href: "/home" },
                     { label: "Mis eventos", href: "/mis-eventos" },
-                    { label: "Perfil DJ", href: "/perfil-dj" },
+                    { label: "Buscar clubs", href: "/clubs" },
                 ];
             case "propietario":
                 return [
-                    { label: "Mis clubs", href: "/mi-club" },
+                    { label: "Inicio", href: "/home" },
+                    { label: "Mi club", href: "/mi-club" },
                     { label: "Crear evento", href: "/crear-evento" },
+                    { label: "Buscar DJs", href: "/djs" },
                 ];
             case "admin":
                 return [
+                    { label: "Inicio", href: "/home" },
                     { label: "Panel admin", href: "/admin" },
-                    { label: "Usuarios", href: "/admin/usuarios" },
                 ];
             default:
                 return defaultNavItems;
@@ -101,7 +105,7 @@ const Navbar = () => {
                     <div className="hidden lg:flex justify-end space-x-4 items-center w-1/4">
                         {user ? (                            <div className="user-menu flex items-center space-x-4 relative">
                                 <img
-                                    src={user.fotoPerfilUrl || "/default-profile.png"}
+                                    src={user.fotoPerfilUrl || "/user-dark.svg"}
                                     alt="Foto de perfil"
                                     className="profile-pic w-10 h-10 rounded-full cursor-pointer border-2 border-fuchsia-600 hover:scale-105 transition-transform shadow-md"
                                     onClick={() => setMenuOpen((open) => !open)}
@@ -137,6 +141,10 @@ const Navbar = () => {
                                             </Link>
                                         )}
                                         
+                                        <Link to={`/perfil`} className="flex items-center px-4 py-2 rounded hover:bg-fuchsia-800/30 transition-colors text-gray-200 hover:text-white">
+                                            <span className="mr-2">👤</span> Perfil
+                                        </Link>
+
                                         <button
                                             onClick={handleLogout}
                                             className="flex w-full items-center px-4 py-2 mt-2 rounded hover:bg-red-900/30 transition-colors text-red-400 hover:text-red-300"
@@ -196,6 +204,11 @@ const Navbar = () => {
                                 </>
                             )}
                         </div>
+                        {user && (
+                            <Link to="/perfil" className="py-2 px-3 border rounded-md bg-fuchsia-700 text-white mt-4 block text-center">
+                                Perfil
+                            </Link>
+                        )}
                     </div>
                 )}
             </div>
