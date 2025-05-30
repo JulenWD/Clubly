@@ -375,37 +375,24 @@ export default function MostWantedEvents(): React.ReactElement {
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
         {/* Fondo de llamas */}
         <div className="w-full h-full bg-[url('/llamas-bg.svg')] bg-cover bg-center opacity-30" />
-        {/* Iconos de fuego decorativos (desktop y móvil) */}
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-8 top-8 text-[60px] text-orange-500/70 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute right-12 top-16 text-[48px] text-orange-400/60 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/2 -translate-x-1/2 bottom-4 text-[80px] text-orange-600/60 animate-pulse" />
-        <Icon icon="mdi:fire" className="md:hidden absolute left-4 top-4 text-[40px] text-orange-500/70 animate-pulse" />
-        <Icon icon="mdi:fire" className="md:hidden absolute right-6 top-10 text-[32px] text-orange-400/60 animate-pulse" />
-        <Icon icon="mdi:fire" className="md:hidden absolute left-1/2 -translate-x-1/2 bottom-2 text-[56px] text-orange-600/60 animate-pulse" />
+        {/* MUCHOS iconos de fuego decorativos, de diferentes colores y tamaños, en posiciones variadas para desktop */}
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-8 top-8 text-[60px] text-orange-500/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-24 top-24 text-[36px] text-yellow-400/70 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/4 top-12 text-[44px] text-red-500/60 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute right-12 top-16 text-[48px] text-orange-400/70 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute right-24 top-32 text-[32px] text-yellow-500/60 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/2 -translate-x-1/2 bottom-4 text-[80px] text-orange-600/70 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/3 bottom-10 text-[36px] text-red-400/60 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute right-1/4 bottom-8 text-[52px] text-yellow-400/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute right-10 bottom-20 text-[40px] text-orange-300/70 animate-pulse" />
+        {/* Fuegos para móvil, más pequeños y variados */}
+        <Icon icon="mdi:fire" className="md:hidden absolute left-4 top-4 text-[32px] text-orange-500/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="md:hidden absolute right-6 top-10 text-[28px] text-yellow-400/70 animate-pulse" />
+        <Icon icon="mdi:fire" className="md:hidden absolute left-1/2 -translate-x-1/2 bottom-2 text-[44px] text-orange-600/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="md:hidden absolute left-10 bottom-10 text-[24px] text-red-400/60 animate-pulse" />
+        <Icon icon="mdi:fire" className="md:hidden absolute right-10 bottom-16 text-[32px] text-yellow-400/80 animate-pulse" />
       </div>
       <div className="relative z-10">
-        {/* Botón de perfil flotante en la sección, igual que en la navbar */}
-        <div className="absolute right-2 top-2 md:right-6 md:top-6 z-20">
-          <button
-            aria-label="Ir a mi perfil"
-            className="bg-black/60 hover:bg-fuchsia-900/40 border-2 border-fuchsia-700 rounded-full p-2 shadow-lg transition flex items-center justify-center"
-            onClick={() => {
-              if (!user) {
-                navigate('/login');
-              } else if (user.rol === 'admin') {
-                navigate('/dashboard/admin');
-              } else if (user.rol === 'propietario' || user.rol === 'club') {
-                navigate('/dashboard/club');
-              } else if (user.rol === 'dj') {
-                navigate('/dashboard/dj');
-              } else {
-                navigate('/dashboard');
-              }
-            }}
-          >
-            <Icon icon="mdi:account-circle" className="text-fuchsia-300 text-3xl md:text-4xl" />
-          </button>
-        </div>
         <h2 className="text-2xl md:text-3xl font-bold neon-fuchsia mb-6 text-center">Eventos Destacados</h2>
         <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 overflow-x-auto scrollbar-hide">
           {/* Mostrar mensaje personalizado o eventos */}

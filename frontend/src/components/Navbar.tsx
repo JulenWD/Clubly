@@ -205,9 +205,24 @@ const Navbar = () => {
                             )}
                         </div>
                         {user && (
-                            <Link to="/perfil" className="flex items-center px-4 py-2 rounded hover:bg-fuchsia-800/30 transition-colors text-gray-200 hover:text-white mt-4 justify-center">
+                            <button
+                                onClick={() => {
+                                    if (!user) {
+                                        navigate('/login');
+                                    } else if (user.rol === 'admin') {
+                                        navigate('/dashboard/admin');
+                                    } else if (user.rol === 'propietario' || user.rol === 'club') {
+                                        navigate('/dashboard/club');
+                                    } else if (user.rol === 'dj') {
+                                        navigate('/dashboard/dj');
+                                    } else {
+                                        navigate('/dashboard');
+                                    }
+                                }}
+                                className="flex items-center px-4 py-2 rounded hover:bg-fuchsia-800/30 transition-colors text-gray-200 hover:text-white mt-4 justify-center"
+                            >
                                 <span className="mr-2">👤</span> Perfil
-                            </Link>
+                            </button>
                         )}
                     </div>
                 )}
