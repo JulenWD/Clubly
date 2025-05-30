@@ -34,6 +34,24 @@ export class UsuarioService {
                     });
                 }
             }
+            // Si el usuario es propietario, crear el perfil de club con la fotoPerfil del usuario
+            if (usuarioGuardado.rol === 'propietario') {
+                const clubExistente = await this.clubModel.findOne({ propietario: usuarioGuardado._id });
+                if (!clubExistente) {
+                    await this.clubModel.create({
+                        propietario: usuarioGuardado._id,
+                        nombre: usuarioGuardado.nombre + ' Club',
+                        ubicacion: usuarioGuardado.ubicacion || 'Ubicación no especificada',
+                        descripcion: '',
+                        estilosMusicales: usuarioGuardado.gustosMusicales || [],
+                        eventos: [],
+                        reviews: [],
+                        redesSociales: [],
+                        capacidad: 0,
+                        fotoPerfil: usuarioGuardado.fotoPerfil || '',
+                    });
+                }
+            }
             return usuarioGuardado;
         } catch (err: any) {            
             console.error('Error al crear usuario:', err);

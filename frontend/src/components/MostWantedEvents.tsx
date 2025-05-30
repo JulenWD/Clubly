@@ -373,10 +373,39 @@ export default function MostWantedEvents(): React.ReactElement {
     <section className="w-full max-w-7xl mx-auto px-2 md:px-6 py-8 relative">
       {/* Fondo decorativo SOLO para MostWantedEvents */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
-        {/* Aquí puedes poner el SVG, imagen o gradiente de fondo de las llamas, ejemplo: */}
+        {/* Fondo de llamas */}
         <div className="w-full h-full bg-[url('/llamas-bg.svg')] bg-cover bg-center opacity-30" />
+        {/* Iconos de fuego decorativos (desktop y móvil) */}
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-8 top-8 text-[60px] text-orange-500/70 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute right-12 top-16 text-[48px] text-orange-400/60 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/2 -translate-x-1/2 bottom-4 text-[80px] text-orange-600/60 animate-pulse" />
+        <Icon icon="mdi:fire" className="md:hidden absolute left-4 top-4 text-[40px] text-orange-500/70 animate-pulse" />
+        <Icon icon="mdi:fire" className="md:hidden absolute right-6 top-10 text-[32px] text-orange-400/60 animate-pulse" />
+        <Icon icon="mdi:fire" className="md:hidden absolute left-1/2 -translate-x-1/2 bottom-2 text-[56px] text-orange-600/60 animate-pulse" />
       </div>
       <div className="relative z-10">
+        {/* Botón de perfil flotante en la sección, igual que en la navbar */}
+        <div className="absolute right-2 top-2 md:right-6 md:top-6 z-20">
+          <button
+            aria-label="Ir a mi perfil"
+            className="bg-black/60 hover:bg-fuchsia-900/40 border-2 border-fuchsia-700 rounded-full p-2 shadow-lg transition flex items-center justify-center"
+            onClick={() => {
+              if (!user) {
+                navigate('/login');
+              } else if (user.rol === 'admin') {
+                navigate('/dashboard/admin');
+              } else if (user.rol === 'propietario' || user.rol === 'club') {
+                navigate('/dashboard/club');
+              } else if (user.rol === 'dj') {
+                navigate('/dashboard/dj');
+              } else {
+                navigate('/dashboard');
+              }
+            }}
+          >
+            <Icon icon="mdi:account-circle" className="text-fuchsia-300 text-3xl md:text-4xl" />
+          </button>
+        </div>
         <h2 className="text-2xl md:text-3xl font-bold neon-fuchsia mb-6 text-center">Eventos Destacados</h2>
         <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 overflow-x-auto scrollbar-hide">
           {/* Mostrar mensaje personalizado o eventos */}
