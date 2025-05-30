@@ -375,39 +375,64 @@ export default function MostWantedEvents(): React.ReactElement {
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
         {/* Fondo de llamas */}
         <div className="w-full h-full bg-[url('/llamas-bg.svg')] bg-cover bg-center opacity-30" />
-        {/* MUCHOS iconos de fuego decorativos, de diferentes colores neón y tamaños, especialmente en la parte inferior */}
+        {/* MUCHOS iconos de fuego decorativos, de diferentes colores neón y tamaños, especialmente en la parte inferior y en posiciones caóticas */}
         {/* Desktop: */}
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-8 top-8 text-[60px] text-orange-500/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-24 top-24 text-[36px] text-yellow-400/70 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/4 top-12 text-[44px] text-fuchsia-400/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute right-12 top-16 text-[48px] text-orange-400/70 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute right-24 top-32 text-[32px] text-yellow-500/60 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/2 -translate-x-1/2 bottom-4 text-[80px] text-orange-600/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/3 bottom-10 text-[36px] text-fuchsia-500/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute right-1/4 bottom-8 text-[52px] text-yellow-400/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute right-10 bottom-20 text-[40px] text-orange-300/70 animate-pulse" />
-        {/* Más fuegos neón en la parte inferior, sin orden, para efecto caótico */}
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-10 bottom-2 text-[38px] text-fuchsia-400/90 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-32 bottom-6 text-[44px] text-cyan-400/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/4 bottom-3 text-[32px] text-pink-500/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/2 bottom-1 text-[60px] text-fuchsia-300/90 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute right-1/3 bottom-4 text-[36px] text-cyan-300/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute right-24 bottom-2 text-[40px] text-fuchsia-400/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute right-10 bottom-8 text-[32px] text-pink-400/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute right-1/2 bottom-10 text-[28px] text-cyan-400/80 animate-pulse" />
+        {[...Array(30)].map((_, i) => (
+          <Icon
+            key={`fire-top-${i}`}
+            icon="mdi:fire"
+            className={`hidden md:block absolute animate-pulse select-none pointer-events-none`}
+            style={{
+              left: `${Math.random() * 90}%`,
+              top: `${Math.random() * 40}%`,
+              fontSize: `${28 + Math.random() * 60}px`,
+              color: [
+                '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff', '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff'
+              ][Math.floor(Math.random() * 20)],
+              opacity: 0.7 + Math.random() * 0.3,
+              zIndex: 1
+            }}
+          />
+        ))}
+        {[...Array(30)].map((_, i) => (
+          <Icon
+            key={`fire-bottom-${i}`}
+            icon="mdi:fire"
+            className={`hidden md:block absolute animate-pulse select-none pointer-events-none`}
+            style={{
+              left: `${Math.random() * 90}%`,
+              bottom: `${Math.random() * 18}%`,
+              fontSize: `${32 + Math.random() * 70}px`,
+              color: [
+                '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff', '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff'
+              ][Math.floor(Math.random() * 20)],
+              opacity: 0.8 + Math.random() * 0.2,
+              zIndex: 2
+            }}
+          />
+        ))}
         {/* Móvil: */}
-        <Icon icon="mdi:fire" className="md:hidden absolute left-4 top-4 text-[32px] text-orange-500/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="md:hidden absolute right-6 top-10 text-[28px] text-yellow-400/70 animate-pulse" />
-        <Icon icon="mdi:fire" className="md:hidden absolute left-1/2 -translate-x-1/2 bottom-2 text-[44px] text-orange-600/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="md:hidden absolute left-10 bottom-10 text-[24px] text-fuchsia-400/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="md:hidden absolute right-10 bottom-16 text-[32px] text-yellow-400/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="md:hidden absolute left-1/4 bottom-4 text-[28px] text-cyan-400/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="md:hidden absolute right-1/3 bottom-2 text-[32px] text-pink-400/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="md:hidden absolute left-1/2 bottom-8 text-[24px] text-fuchsia-300/80 animate-pulse" />
+        {[...Array(20)].map((_, i) => (
+          <Icon
+            key={`fire-mobile-${i}`}
+            icon="mdi:fire"
+            className={`md:hidden absolute animate-pulse select-none pointer-events-none`}
+            style={{
+              left: `${Math.random() * 90}%`,
+              bottom: `${Math.random() * 25}%`,
+              fontSize: `${18 + Math.random() * 40}px`,
+              color: [
+                '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff', '#ff00ea', '#ff9900', '#ffea00', '#00fff7', '#ff0077', '#ff4d00', '#00ffb3', '#ff00c8', '#ffb300', '#00eaff'
+              ][Math.floor(Math.random() * 20)],
+              opacity: 0.7 + Math.random() * 0.3,
+              zIndex: 2
+            }}
+          />
+        ))}
       </div>
       <div className="relative z-10">
         <h2 className="text-2xl md:text-3xl font-bold neon-fuchsia mb-6 text-center">Eventos Destacados</h2>
-        <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 overflow-x-auto scrollbar-hide md:justify-center md:items-end">
+        <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 md:justify-center md:items-end overflow-x-hidden scrollbar-hide">
           {/* Mostrar mensaje personalizado o eventos */}
           {loading ? (
             <div className="text-center w-full py-16">
@@ -423,7 +448,7 @@ export default function MostWantedEvents(): React.ReactElement {
               return evento && evento._id ? (
                 <div
                   key={evento._id}
-                  className="min-w-[90vw] max-w-[95vw] md:min-w-[300px] md:max-w-[350px] bg-gradient-to-b from-black/90 to-black/70 rounded-lg p-3 flex flex-col items-center shadow-2xl group hover:shadow-[0_0_25px_#ff00ea] hover:-translate-y-1 transition-all duration-300 cursor-pointer mx-auto md:mx-0"
+                  className="min-w-[90vw] max-w-[95vw] md:min-w-[300px] md:max-w-[350px] bg-gradient-to-b from-black/90 to-black/70 rounded-lg p-3 flex flex-col items-center shadow-2xl group hover:shadow-[0_0_25px_#ff00ea] hover:-translate-y-1 transition-all duration-300 cursor-pointer mx-auto md:mx-0 select-none"
                   style={{ marginBottom: 16 }}
                 >
                   {/* Sello de "WANTED" */}
