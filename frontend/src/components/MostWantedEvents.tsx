@@ -370,11 +370,11 @@ export default function MostWantedEvents(): React.ReactElement {
   };
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-2 md:px-6 py-8 relative">
+    <section className="w-full max-w-7xl mx-auto px-2 md:px-6 py-8 relative overflow-x-hidden overscroll-x-none" style={{overflowX: 'hidden'}}>
       {/* Fondo decorativo SOLO para MostWantedEvents */}
-      <div className="absolute inset-0 z-0 pointer-events-none select-none">
+      <div className="absolute inset-0 z-0 pointer-events-none select-none max-w-full overflow-x-hidden" style={{overflowX: 'hidden'}}>
         {/* Fondo de llamas */}
-        <div className="w-full h-full bg-[url('/llamas-bg.svg')] bg-cover bg-center opacity-30" />
+        <div className="w-full h-full bg-[url('/llamas-bg.svg')] bg-cover bg-center opacity-30 max-w-full overflow-x-hidden" style={{overflowX: 'hidden'}} />
         {/* MUCHOS iconos de fuego decorativos, de diferentes colores neón y tamaños, especialmente en la parte inferior y en posiciones caóticas */}
         {/* Desktop: */}
         {[...Array(30)].map((_, i) => (
@@ -430,9 +430,9 @@ export default function MostWantedEvents(): React.ReactElement {
           />
         ))}
       </div>
-      <div className="relative z-10">
+      <div className="relative z-10 max-w-full overflow-x-hidden" style={{overflowX: 'hidden'}}>
         <h2 className="text-2xl md:text-3xl font-bold neon-fuchsia mb-6 text-center">Eventos Destacados</h2>
-        <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 md:justify-center md:items-end overflow-x-hidden scrollbar-hide">
+        <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 md:justify-center md:items-end overflow-x-hidden overscroll-x-none max-w-full scrollbar-hide" style={{overflowX: 'hidden', maxWidth: '100%'}}>
           {/* Mostrar mensaje personalizado o eventos */}
           {loading ? (
             <div className="text-center w-full py-16">
@@ -449,7 +449,7 @@ export default function MostWantedEvents(): React.ReactElement {
                 <div
                   key={evento._id}
                   className="min-w-[90vw] max-w-[95vw] md:min-w-[300px] md:max-w-[350px] bg-gradient-to-b from-black/90 to-black/70 rounded-lg p-3 flex flex-col items-center shadow-2xl group hover:shadow-[0_0_25px_#ff00ea] hover:-translate-y-1 transition-all duration-300 cursor-pointer mx-auto md:mx-0 select-none"
-                  style={{ marginBottom: 16 }}
+                  style={{ marginBottom: 16, willChange: 'transform', overflowX: 'hidden', maxWidth: '100%' }}
                 >
                   {/* Sello de "WANTED" */}
                   <div className="absolute top-2 right-2 rotate-12 opacity-80 select-none pointer-events-none">
@@ -479,7 +479,9 @@ export default function MostWantedEvents(): React.ReactElement {
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'center',
-                      backgroundColor: 'rgba(0,0,0,0.3)'
+                      backgroundColor: 'rgba(0,0,0,0.3)',
+                      overflowX: 'hidden',
+                      maxWidth: '100%'
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -526,7 +528,7 @@ export default function MostWantedEvents(): React.ReactElement {
                         return `/placeholder.jpg`;
                       })()}
                       alt={eventoActual.nombre} 
-                      className="object-cover w-full h-full sepia-[0.2] contrast-125 hover:scale-105 transition-transform"
+                      className="object-cover w-full h-full sepia-[0.2] contrast-125 group-hover:scale-[1.03] transition-transform"
                       style={{maxHeight: '100%', maxWidth: '100%', aspectRatio: '4/5'}}
                       onError={(e) => {
                         // Si hay error, usar un placeholder
