@@ -57,52 +57,25 @@ export default function MostWantedEvents(): React.ReactElement {
   const { user } = useUserContext();
   const navigate = useNavigate();
 
-  // Obtener la ciudad del usuario del localStorage o del perfil
+  // Obtener SIEMPRE la ciudad actualizada del usuario desde la base de datos
   useEffect(() => {
-    const ciudadGuardada = localStorage.getItem('clubly_ciudad_usuario');
-    
-    if (ciudadGuardada) {
-      // Lista de regiones que deben tratarse de forma especial
-      const regiones = ['Cantabria', 'Asturias', 'La Rioja', 'Navarra'];
-      
-      if (regiones.includes(ciudadGuardada)) {
-        // Para regiones, usar la capital o ciudad principal
-        const ciudadesPrincipales: Record<string, string> = {
-          'Cantabria': 'Santander',
-          'Asturias': 'Oviedo',
-          'La Rioja': 'Logroño',
-          'Navarra': 'Pamplona'
-        };
-        
-        setCiudad(ciudadesPrincipales[ciudadGuardada]);
-      } else {
-        setCiudad(ciudadGuardada);
-      }
-    } else if (user && (user.ciudad || user.ubicacion)) {
-      // Usar ubicacion si ciudad no está disponible
-      const ubicacionUsuario = user.ciudad || user.ubicacion || '';
-      
-      // Lista de regiones que deben tratarse de forma especial
-      const regiones = ['Cantabria', 'Asturias', 'La Rioja', 'Navarra'];
-      
-      if (ubicacionUsuario && regiones.includes(ubicacionUsuario)) {
-        // Para regiones, usar la capital o ciudad principal
-        const ciudadesPrincipales: Record<string, string> = {
-          'Cantabria': 'Santander',
-          'Asturias': 'Oviedo',
-          'La Rioja': 'Logroño',
-          'Navarra': 'Pamplona'
-        };
-        
-        setCiudad(ciudadesPrincipales[ubicacionUsuario]);
-      } else {
-        setCiudad(ubicacionUsuario);
-      }
-      
-      if (ubicacionUsuario) {
-        localStorage.setItem('clubly_ciudad_usuario', ubicacionUsuario);
+    async function fetchCiudadUsuario() {
+      if (!user) return;
+      try {
+        // Llamada directa al backend para obtener el perfil actualizado
+        const apiUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+        const res = await (user?.email ? authAxios : axios).get(`${apiUrl}/usuarios/perfil`);
+        if (res.data && (res.data.ciudad || res.data.ubicacion)) {
+          // Preferir ciudad, si no, ubicacion
+          const ciudadBD = res.data.ciudad || res.data.ubicacion;
+          setCiudad(ciudadBD);
+          localStorage.setItem('clubly_ciudad_usuario', ciudadBD);
+        }
+      } catch (e) {
+        // Si falla, mantener la ciudad previa
       }
     }
+    fetchCiudadUsuario();
   }, [user]);
   // Cargar eventos destacados por ciudad
   useEffect(() => {
@@ -459,7 +432,7 @@ export default function MostWantedEvents(): React.ReactElement {
                 <div
                   key={evento._id}
                   className="min-w-0 max-w-[95vw] md:min-w-[300px] md:max-w-[350px] bg-gradient-to-b from-black/90 to-black/70 rounded-lg p-3 flex flex-col items-center shadow-2xl group hover:shadow-[0_0_25px_#ff00ea] hover:-translate-y-1 transition-all duration-300 cursor-pointer mx-auto md:mx-0 select-none overflow-x-hidden"
-                  style={{ marginBottom: 16, willChange: 'transform', overflowX: 'hidden', maxWidth: '100%', position: 'relative' }}
+                  style={{ marginBottom: 16, willChange: 'transform', overflow: 'hidden', maxWidth: '100%', position: 'relative', minWidth: 0 }}
                 >
                   {/* Sello de "WANTED" */}
                   <div className="absolute top-2 right-2 rotate-12 opacity-80 select-none pointer-events-none">
@@ -492,7 +465,8 @@ export default function MostWantedEvents(): React.ReactElement {
                       backgroundColor: 'rgba(0,0,0,0.3)',
                       overflow: 'hidden',
                       maxWidth: '100%',
-                      position: 'relative'
+                      position: 'relative',
+                      minWidth: 0
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -539,7 +513,7 @@ export default function MostWantedEvents(): React.ReactElement {
                         return `/placeholder.jpg`;
                       })()}
                       alt={eventoActual.nombre} 
-                      className="object-cover w-full h-full sepia-[0.2] contrast-125 group-hover:scale-[1.01] transition-transform"
+                      className="object-cover w-full h-full sepia-[0.2] contrast-125 group-hover:scale-[1.005] transition-transform"
                       style={{maxHeight: '100%', maxWidth: '100%', aspectRatio: '4/5', display: 'block'}}
                       onError={(e) => {
                         // Si hay error, usar un placeholder
