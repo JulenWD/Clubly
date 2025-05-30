@@ -469,55 +469,14 @@ export default function MostWantedEvents(): React.ReactElement {
   };
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-2 md:px-6 py-8">
-      {/* Fondo con textura sutil */}
-      <div className="absolute inset-0 z-0 bg-black/90">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMjIyIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=')] opacity-20"></div>
+    <section className="w-full max-w-7xl mx-auto px-2 md:px-6 py-8 relative">
+      {/* Fondo decorativo SOLO para MostWantedEvents */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none">
+        {/* Aquí puedes poner el SVG, imagen o gradiente de fondo de las llamas, ejemplo: */}
+        <div className="w-full h-full bg-[url('/llamas-bg.svg')] bg-cover bg-center opacity-30" />
       </div>
-
-      {/* Iconos de fuego con posiciones estáticas predefinidas */}
-      <div className="absolute left-0 right-0 bottom-0 h-full overflow-hidden pointer-events-none select-none">
-        {FIRE_ICONS.map((fire) => (
-          <div 
-            key={fire.id} 
-            className="absolute" 
-            style={{
-              left: fire.left, 
-              bottom: fire.bottom, 
-              zIndex: fire.zIndex,
-              transform: `rotate(${fire.rotate}deg)`,
-            }}
-          >
-            <Icon 
-              icon="mingcute:fire-line" 
-              style={{
-                fontSize: fire.size, 
-                color: fire.color, 
-                filter: `drop-shadow(0 0 16px ${fire.color})`,
-                opacity: fire.opacity
-              }} 
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Contenido principal con ancho controlado */}
-      <div className="max-w-4xl mx-auto relative z-10">
-        <div className="flex flex-col items-center mb-6 relative">
-          {/* Título principal con resplandor neón elegante */}
-          <h2 className="text-4xl md:text-6xl font-handwritten font-bold neon-fuchsia drop-shadow-lg text-center">
-            Eventos Destacados
-          </h2>
-          {/* Línea decorativa debajo del título */}
-          <div className="absolute -bottom-4 w-4/5 h-1 bg-gradient-to-r from-transparent via-fuchsia-600 to-transparent opacity-70"></div>
-
-          {/* Subtítulo con ciudad */}
-          <div className="mt-3 text-fuchsia-300/80 italic text-sm tracking-wider">
-            {ciudad ? `EN ${ciudad.toUpperCase()}` : 'CONFIGURA TU CIUDAD'}
-          </div>
-        </div>
-        
-        {/* Contenedor de tarjetas con mejor espaciado */}
+      <div className="relative z-10">
+        <h2 className="text-2xl md:text-3xl font-bold neon-fuchsia mb-6 text-center">Eventos Destacados</h2>
         <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 overflow-x-auto scrollbar-hide">
           {/* Mostrar mensaje personalizado o eventos */}
           {loading ? (
@@ -558,7 +517,7 @@ export default function MostWantedEvents(): React.ReactElement {
                     </div>
                   )}                                   
                   <div 
-                    className="w-full h-52 rounded-md overflow-hidden mb-3 border-2 relative cursor-pointer" 
+                    className="w-full aspect-[4/5] rounded-md overflow-hidden mb-3 border-2 relative cursor-pointer md:h-64 lg:h-72 xl:h-80" 
                     style={{
                       borderColor: '#a21caf',
                       boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)',
@@ -574,7 +533,7 @@ export default function MostWantedEvents(): React.ReactElement {
                   >
                     {/* Capa de gradiente para mejorar legibilidad */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
-                      {/* Verificar si el evento está agotado para mostrar un sello */}
+                    {/* Verificar si el evento está agotado para mostrar un sello */}
                     {isEventoAgotado(eventoActual) && (
                       <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-30 pointer-events-none">
                         <div className="rotate-[-30deg] bg-red-500/70 text-white font-bold py-2 px-12 border-2 border-white shadow-lg text-xl" 
@@ -583,7 +542,6 @@ export default function MostWantedEvents(): React.ReactElement {
                         </div>
                       </div>
                     )}
-                    
                     <img 
                       src={(() => {
                         // Función para normalizar URLs con tipo definido
@@ -614,10 +572,10 @@ export default function MostWantedEvents(): React.ReactElement {
                       })()}
                       alt={eventoActual.nombre} 
                       className="object-cover w-full h-full sepia-[0.2] contrast-125 hover:scale-105 transition-transform"
-                      style={{maxHeight: '100%', maxWidth: '100%'}}
+                      style={{maxHeight: '100%', maxWidth: '100%', aspectRatio: '4/5'}}
                       onError={(e) => {
                         // Si hay error, usar un placeholder
-                        e.currentTarget.src = `/placeholder.jpg`;
+                        e.currentTarget.src = "/placeholder.jpg";
                       }}
                     />
                   </div>

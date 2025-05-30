@@ -205,8 +205,8 @@ const Navbar = () => {
                             )}
                         </div>
                         {user && (
-                            <Link to="/perfil" className="py-2 px-3 border rounded-md bg-fuchsia-700 text-white mt-4 block text-center">
-                                Perfil
+                            <Link to="/perfil" className="flex items-center px-4 py-2 rounded hover:bg-fuchsia-800/30 transition-colors text-gray-200 hover:text-white mt-4 justify-center">
+                                <span className="mr-2">👤</span> Perfil
                             </Link>
                         )}
                     </div>
