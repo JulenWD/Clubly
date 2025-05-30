@@ -41,7 +41,9 @@ async function bootstrap() {
       'Authorization',
       'X-Requested-With',
       'Accept',
-      'Origin'
+      'Origin',
+      'Cache-Control',
+      'Pragma'
     ],
     preflightContinue: false,
     optionsSuccessStatus: 204
