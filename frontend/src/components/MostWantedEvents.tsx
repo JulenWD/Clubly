@@ -64,19 +64,22 @@ export default function MostWantedEvents(): React.ReactElement {
       try {
         // Llamada directa al backend para obtener el perfil actualizado
         const apiUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
-        const res = await (user?.email ? authAxios : axios).get(`${apiUrl}/usuarios/perfil`);
+        // Usar siempre authAxios para usuarios autenticados
+        const res = await authAxios.get(`${apiUrl}/usuarios/perfil`);
         if (res.data && (res.data.ciudad || res.data.ubicacion)) {
           // Preferir ciudad, si no, ubicacion
           const ciudadBD = res.data.ciudad || res.data.ubicacion;
           setCiudad(ciudadBD);
           localStorage.setItem('clubly_ciudad_usuario', ciudadBD);
+        } else {
+          setCiudad('');
         }
       } catch (e) {
-        // Si falla, mantener la ciudad previa
+        setCiudad('');
       }
     }
     fetchCiudadUsuario();
-  }, [user]);
+  }, [user && user.email]);
   // Cargar eventos destacados por ciudad
   useEffect(() => {
     async function cargarEventosDestacados() {
