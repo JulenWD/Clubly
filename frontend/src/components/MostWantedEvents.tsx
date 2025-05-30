@@ -61,16 +61,19 @@ export default function MostWantedEvents(): React.ReactElement {
   useEffect(() => {
     // Si ya hay ciudad en el estado, no hacer nada
     if (ciudad) return;
-    // 1. Intentar localStorage
+    // 1. Intentar localStorage SOLO si coincide con el usuario actual
     const ciudadGuardada = localStorage.getItem('clubly_ciudad_usuario');
-    if (ciudadGuardada) {
+    const emailGuardado = localStorage.getItem('clubly_email_usuario');
+    if (ciudadGuardada && emailGuardado === user?.email) {
       setCiudad(ciudadGuardada);
       return;
     }
     // 2. Intentar userContext
     if (user && (user.ciudad || user.ubicacion)) {
-      setCiudad((user.ciudad || user.ubicacion) ?? '');
-      localStorage.setItem('clubly_ciudad_usuario', (user.ciudad || user.ubicacion) ?? '');
+      const ciudadUsuario = (user.ciudad || user.ubicacion) ?? '';
+      setCiudad(ciudadUsuario);
+      localStorage.setItem('clubly_ciudad_usuario', ciudadUsuario);
+      localStorage.setItem('clubly_email_usuario', user.email || '');
     }
   }, [user, ciudad]);
 
