@@ -442,7 +442,7 @@ export default function MostWantedEvents(): React.ReactElement {
             {ciudad ? ciudad : 'Tu ciudad'}
           </div>
         </div>
-        <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 md:justify-center md:items-end overflow-x-hidden overscroll-x-none max-w-full scrollbar-hide" style={{overflowX: 'hidden', maxWidth: '100%'}}>
+        <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 md:justify-center md:items-end overflow-x-hidden overscroll-x-none max-w-full scrollbar-hide" style={{overflowX: 'hidden', maxWidth: '100%', position: 'relative'}}>
           {/* Mostrar mensaje personalizado o eventos */}
           {loading ? (
             <div className="text-center w-full py-16">
@@ -458,8 +458,8 @@ export default function MostWantedEvents(): React.ReactElement {
               return evento && evento._id ? (
                 <div
                   key={evento._id}
-                  className="min-w-[90vw] max-w-[95vw] md:min-w-[300px] md:max-w-[350px] bg-gradient-to-b from-black/90 to-black/70 rounded-lg p-3 flex flex-col items-center shadow-2xl group hover:shadow-[0_0_25px_#ff00ea] hover:-translate-y-1 transition-all duration-300 cursor-pointer mx-auto md:mx-0 select-none"
-                  style={{ marginBottom: 16, willChange: 'transform', overflowX: 'hidden', maxWidth: '100%' }}
+                  className="min-w-0 max-w-[95vw] md:min-w-[300px] md:max-w-[350px] bg-gradient-to-b from-black/90 to-black/70 rounded-lg p-3 flex flex-col items-center shadow-2xl group hover:shadow-[0_0_25px_#ff00ea] hover:-translate-y-1 transition-all duration-300 cursor-pointer mx-auto md:mx-0 select-none overflow-x-hidden"
+                  style={{ marginBottom: 16, willChange: 'transform', overflowX: 'hidden', maxWidth: '100%', position: 'relative' }}
                 >
                   {/* Sello de "WANTED" */}
                   <div className="absolute top-2 right-2 rotate-12 opacity-80 select-none pointer-events-none">
@@ -482,7 +482,7 @@ export default function MostWantedEvents(): React.ReactElement {
                     </div>
                   )}                                   
                   <div 
-                    className="w-full aspect-[4/5] rounded-md overflow-hidden mb-3 border-2 relative cursor-pointer md:h-64 lg:h-72 xl:h-80" 
+                    className="w-full aspect-[4/5] rounded-md overflow-hidden mb-3 border-2 relative cursor-pointer md:h-64 lg:h-72 xl:h-80"
                     style={{
                       borderColor: '#a21caf',
                       boxShadow: 'inset 0 0 10px rgba(0,0,0,0.5)',
@@ -490,8 +490,9 @@ export default function MostWantedEvents(): React.ReactElement {
                       justifyContent: 'center',
                       alignItems: 'center',
                       backgroundColor: 'rgba(0,0,0,0.3)',
-                      overflowX: 'hidden',
-                      maxWidth: '100%'
+                      overflow: 'hidden',
+                      maxWidth: '100%',
+                      position: 'relative'
                     }}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -538,8 +539,8 @@ export default function MostWantedEvents(): React.ReactElement {
                         return `/placeholder.jpg`;
                       })()}
                       alt={eventoActual.nombre} 
-                      className="object-cover w-full h-full sepia-[0.2] contrast-125 group-hover:scale-[1.03] transition-transform"
-                      style={{maxHeight: '100%', maxWidth: '100%', aspectRatio: '4/5'}}
+                      className="object-cover w-full h-full sepia-[0.2] contrast-125 group-hover:scale-[1.01] transition-transform"
+                      style={{maxHeight: '100%', maxWidth: '100%', aspectRatio: '4/5', display: 'block'}}
                       onError={(e) => {
                         // Si hay error, usar un placeholder
                         e.currentTarget.src = "/placeholder.jpg";
