@@ -141,10 +141,6 @@ const Navbar = () => {
                                             </Link>
                                         )}
                                         
-                                        <Link to={`/perfil`} className="flex items-center px-4 py-2 rounded hover:bg-fuchsia-800/30 transition-colors text-gray-200 hover:text-white">
-                                            <span className="mr-2">👤</span> Perfil
-                                        </Link>
-
                                         <button
                                             onClick={handleLogout}
                                             className="flex w-full items-center px-4 py-2 mt-2 rounded hover:bg-red-900/30 transition-colors text-red-400 hover:text-red-300"

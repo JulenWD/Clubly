@@ -89,68 +89,30 @@ export default function MostWantedEvents(): React.ReactElement {
       
       setLoading(true);
       try {
-        // Usamos un manejo más detallado del logging para debugging
-        console.log(`Cargando eventos destacados para: ${ciudad}`);
-        
         // Codificar la ciudad para la URL (manejo de espacios y caracteres especiales)
         const ciudadEncoded = encodeURIComponent(ciudad);
-        
         // Usar authAxios si hay usuario autenticado, sino axios normal
         const api = user ? authAxios : axios;
-        
         // Usar el baseURL correcto para la petición
         const apiUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
         const response = await api.get(`${apiUrl}/eventos-destacados/ciudad/${ciudadEncoded}`);
-        
-        console.log('Respuesta del backend eventos destacados:', response.data);
-        
         if (response.data && Array.isArray(response.data) && response.data.length > 0) {
           // Asegurar que tenemos todos los datos necesarios antes de mostrar
           const eventosConDatos = response.data
             .filter((evento: any) => evento && evento._id && evento.nombre && evento.fecha)
             .slice(0, 3);
-            // Imprimir datos detallados para debugging
-          console.log(`Eventos destacados cargados: ${eventosConDatos.length}`);
-          eventosConDatos.forEach((evento, idx) => {
-            console.log(`Evento ${idx + 1}: ${evento.nombre} (ID: ${evento._id})`);
-            console.log(`- Tiene ventasPorTipo: ${evento.ventasPorTipo ? 'Sí' : 'No'}`);
-            if (evento.ventasPorTipo) {
-              console.log(`- ventasPorTipo:`, evento.ventasPorTipo);
-            }
-            console.log(`- Tiene entradas: ${evento.entradas ? 'Sí (' + evento.entradas.length + ')' : 'No'}`);
-            if (evento.entradas) {
-              evento.entradas.forEach((entrada: any, i: number) => {
-                console.log(`  - Entrada ${i + 1}: ${entrada.tipo}`);
-                console.log(`    - precio: ${entrada.precio}`);
-                console.log(`    - aforoTotal: ${entrada.aforoTotal}`);
-                console.log(`    - entradasVendidas: ${entrada.entradasVendidas}`);                console.log(`    - Tiene tramos: ${entrada.tramos ? 'Sí (' + entrada.tramos.length + ')' : 'No'}`);
-                if (entrada.tramos) {
-                  entrada.tramos.forEach((tramo: any, t: number) => {
-                    console.log(`      - Tramo ${t + 1}: hasta ${tramo.hasta}, precio ${tramo.precio}`);
-                    console.log(`        cantidadVendida: ${tramo.cantidadVendida}, cantidadDisponible: ${tramo.cantidadDisponible}`);
-                  });
-                }
-              });
-            }
-          });
-          
           setEventos(eventosConDatos);
         } else {
-          // Asegurarnos de que siempre tenemos un array vacío si no hay datos
-          console.log('No se encontraron eventos destacados para esta ciudad');
           setEventos([]);
         }
         setError(null);
       } catch (err) {
-        console.error(`Error al cargar eventos destacados para ${ciudad}:`, err);
         setError('No se pudieron cargar los eventos destacados');
-        // Garantizar que eventos siempre sea un array
         setEventos([]);
       } finally {
         setLoading(false);
       }
     }
-
     cargarEventosDestacados();
   }, [ciudad, user]);
 
@@ -181,7 +143,6 @@ export default function MostWantedEvents(): React.ReactElement {
             eventosMap[evento._id] = res.data;
           }
         } catch (err) {
-          console.error(`Error al actualizar datos del evento ${evento._id}:`, err);
           // Si hay error, mantener el evento original
           eventosMap[evento._id] = evento;
         }
@@ -195,40 +156,8 @@ export default function MostWantedEvents(): React.ReactElement {
   }, [eventos, loading, user]);  // Función para obtener los datos más actualizados de un evento
   const getEventoActualizado = (evento: EventoExtendido): EventoExtendido => {
     if (eventosActualizados[evento._id]) {
-      // Log para depuración
-      console.log(`Datos actualizados para evento ${evento._id} (${evento.nombre}):`);
-      console.log('- Ventas por tipo:', eventosActualizados[evento._id].ventasPorTipo);
-      console.log('- Entradas:', eventosActualizados[evento._id].entradas);
-      
-      // Verificación de datos detallada
-      const ventasPorTipo = eventosActualizados[evento._id].ventasPorTipo || {};
-      const entradas = eventosActualizados[evento._id].entradas || [];
-      
-      entradas.forEach((entrada, i) => {
-        console.log(`Entrada ${i+1} (${entrada.tipo}):`, {
-          'aforoTotal': entrada.aforoTotal,
-          'vendidas': ventasPorTipo[entrada.tipo] || 0,
-          'tiene_tramos': entrada.tramos && entrada.tramos.length > 0,
-          'tramos': entrada.tramos?.map(t => ({
-            'hasta': t.hasta,
-            'precio': t.precio,
-            'disponible': t.cantidadDisponible,
-            'vendido': t.entradasVendidas
-          }))
-        });
-      });
-      
-      // Comprobar disponibilidad usando la función centralizada
-      const todasAgotadas = isEventoAgotado(eventosActualizados[evento._id]);
-      console.log(`- Todas entradas agotadas: ${todasAgotadas}`);
-      
       return eventosActualizados[evento._id];
     }
-    
-    // Log para depuración
-    console.log(`Usando datos originales para evento ${evento._id} (${evento.nombre}):`);
-    console.log('- Entradas:', evento.entradas);
-    console.log('- Ventas por tipo:', evento.ventasPorTipo || 'No disponible');
     
     return evento;
   };
