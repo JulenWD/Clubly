@@ -375,26 +375,39 @@ export default function MostWantedEvents(): React.ReactElement {
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
         {/* Fondo de llamas */}
         <div className="w-full h-full bg-[url('/llamas-bg.svg')] bg-cover bg-center opacity-30" />
-        {/* MUCHOS iconos de fuego decorativos, de diferentes colores y tamaños, en posiciones variadas para desktop */}
+        {/* MUCHOS iconos de fuego decorativos, de diferentes colores neón y tamaños, especialmente en la parte inferior */}
+        {/* Desktop: */}
         <Icon icon="mdi:fire" className="hidden md:block absolute left-8 top-8 text-[60px] text-orange-500/80 animate-pulse" />
         <Icon icon="mdi:fire" className="hidden md:block absolute left-24 top-24 text-[36px] text-yellow-400/70 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/4 top-12 text-[44px] text-red-500/60 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/4 top-12 text-[44px] text-fuchsia-400/80 animate-pulse" />
         <Icon icon="mdi:fire" className="hidden md:block absolute right-12 top-16 text-[48px] text-orange-400/70 animate-pulse" />
         <Icon icon="mdi:fire" className="hidden md:block absolute right-24 top-32 text-[32px] text-yellow-500/60 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/2 -translate-x-1/2 bottom-4 text-[80px] text-orange-600/70 animate-pulse" />
-        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/3 bottom-10 text-[36px] text-red-400/60 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/2 -translate-x-1/2 bottom-4 text-[80px] text-orange-600/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/3 bottom-10 text-[36px] text-fuchsia-500/80 animate-pulse" />
         <Icon icon="mdi:fire" className="hidden md:block absolute right-1/4 bottom-8 text-[52px] text-yellow-400/80 animate-pulse" />
         <Icon icon="mdi:fire" className="hidden md:block absolute right-10 bottom-20 text-[40px] text-orange-300/70 animate-pulse" />
-        {/* Fuegos para móvil, más pequeños y variados */}
+        {/* Más fuegos neón en la parte inferior, sin orden, para efecto caótico */}
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-10 bottom-2 text-[38px] text-fuchsia-400/90 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-32 bottom-6 text-[44px] text-cyan-400/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/4 bottom-3 text-[32px] text-pink-500/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute left-1/2 bottom-1 text-[60px] text-fuchsia-300/90 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute right-1/3 bottom-4 text-[36px] text-cyan-300/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute right-24 bottom-2 text-[40px] text-fuchsia-400/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute right-10 bottom-8 text-[32px] text-pink-400/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="hidden md:block absolute right-1/2 bottom-10 text-[28px] text-cyan-400/80 animate-pulse" />
+        {/* Móvil: */}
         <Icon icon="mdi:fire" className="md:hidden absolute left-4 top-4 text-[32px] text-orange-500/80 animate-pulse" />
         <Icon icon="mdi:fire" className="md:hidden absolute right-6 top-10 text-[28px] text-yellow-400/70 animate-pulse" />
         <Icon icon="mdi:fire" className="md:hidden absolute left-1/2 -translate-x-1/2 bottom-2 text-[44px] text-orange-600/80 animate-pulse" />
-        <Icon icon="mdi:fire" className="md:hidden absolute left-10 bottom-10 text-[24px] text-red-400/60 animate-pulse" />
+        <Icon icon="mdi:fire" className="md:hidden absolute left-10 bottom-10 text-[24px] text-fuchsia-400/80 animate-pulse" />
         <Icon icon="mdi:fire" className="md:hidden absolute right-10 bottom-16 text-[32px] text-yellow-400/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="md:hidden absolute left-1/4 bottom-4 text-[28px] text-cyan-400/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="md:hidden absolute right-1/3 bottom-2 text-[32px] text-pink-400/80 animate-pulse" />
+        <Icon icon="mdi:fire" className="md:hidden absolute left-1/2 bottom-8 text-[24px] text-fuchsia-300/80 animate-pulse" />
       </div>
       <div className="relative z-10">
         <h2 className="text-2xl md:text-3xl font-bold neon-fuchsia mb-6 text-center">Eventos Destacados</h2>
-        <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 overflow-x-auto scrollbar-hide">
+        <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 overflow-x-auto scrollbar-hide md:justify-center md:items-end">
           {/* Mostrar mensaje personalizado o eventos */}
           {loading ? (
             <div className="text-center w-full py-16">
@@ -414,11 +427,11 @@ export default function MostWantedEvents(): React.ReactElement {
                   style={{ marginBottom: 16 }}
                 >
                   {/* Sello de "WANTED" */}
-                  <div className="absolute top-2 right-2 rotate-12 opacity-80">
+                  <div className="absolute top-2 right-2 rotate-12 opacity-80 select-none pointer-events-none">
                     <Icon 
                       icon="game-icons:police-badge" 
                       className="text-[40px] text-fuchsia-600/60" 
-                      style={{ filter: 'drop-shadow(0 0 5px rgba(255, 0, 234, 0.5))' }}
+                      style={{ filter: 'drop-shadow(0 0 5px rgba(255, 0, 234, 0.5))', pointerEvents: 'none', userSelect: 'none' }}
                     />
                   </div>
 

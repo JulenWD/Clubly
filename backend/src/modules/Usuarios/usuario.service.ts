@@ -31,6 +31,7 @@ export class UsuarioService {
                         bio: '',
                         verificado: usuarioGuardado.verificado || false,
                         email: usuarioGuardado.email,
+                        ubicacion: usuarioGuardado.ubicacion || 'Ubicación no especificada',
                     });
                 }
             }
