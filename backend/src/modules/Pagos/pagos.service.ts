@@ -84,7 +84,11 @@ export class PagoService {
             djNombre = evento.djIds.map((dj: any) => dj.nombre).join(', ');
         }
 
-        const frontendUrl = this.configService.get<string>('FRONTEND_URL') || 'http://localhost:5173';
+        const frontendUrl = this.configService.get<string>('FRONTEND_URL');
+        if (!frontendUrl || !/^https?:\/\//.test(frontendUrl)) {
+            console.error('FRONTEND_URL no está definida correctamente:', frontendUrl);
+            throw new Error('Configuración incorrecta: FRONTEND_URL debe estar definida y empezar por http(s)://');
+        }
         const cancelUrl = `${frontendUrl}/pago-cancelado?evento=${encodeURIComponent(evento.nombre)}`;
 
         const sesion = await this.stripe.checkout.sessions.create({

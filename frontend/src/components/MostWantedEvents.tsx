@@ -426,6 +426,51 @@ export default function MostWantedEvents(): React.ReactElement {
     return null;
   };
 
+  // Nueva función para manejar la compra directa
+  const handleCompraDirecta = async (evento: EventoExtendido) => {
+    if (!user) {
+      // Buscar el primer tipo de entrada disponible (preferiblemente General)
+      let tipoEntrada = '';
+      if (evento.entradas && evento.entradas.length > 0) {
+        const disponibles = evento.entradas.filter(e => !e.agotada);
+        const general = disponibles.find(e => e.tipo && e.tipo.toLowerCase().includes('general'));
+        tipoEntrada = general?.tipo || disponibles[0]?.tipo || '';
+      }
+      sessionStorage.setItem('redirect_after_login', `/eventos/${evento._id}`);
+      sessionStorage.setItem('selected_ticket_type', tipoEntrada);
+      navigate('/login');
+      return;
+    }
+    try {
+      // Buscar el primer tipo de entrada disponible (preferiblemente General)
+      let tipoEntrada = '';
+      if (evento.entradas && evento.entradas.length > 0) {
+        const disponibles = evento.entradas.filter(e => !e.agotada);
+        const general = disponibles.find(e => e.tipo && e.tipo.toLowerCase().includes('general'));
+        tipoEntrada = general?.tipo || disponibles[0]?.tipo || '';
+      }
+      if (!tipoEntrada) {
+        alert('No hay entradas disponibles para este evento.');
+        return;
+      }
+      const res = await authAxios.post('/pagos/crear-sesion', {
+        eventoId: evento._id,
+        tipoEntrada
+      });
+      sessionStorage.setItem('clubly_pago_en_proceso', 'true');
+      sessionStorage.setItem('last_user_email', user.email || '');
+      if (res.data.url) {
+        const url = new URL(res.data.url);
+        url.searchParams.set('evento', evento.nombre || '');
+        window.location.href = url.toString();
+      } else {
+        alert('No se recibió URL de pago.');
+      }
+    } catch (err: any) {
+      alert(err.response?.data?.message || 'Error al iniciar el pago. Inténtalo de nuevo más tarde.');
+    }
+  };
+
   return (
     <section className="relative w-full py-16 overflow-visible">
       {/* Fondo con textura sutil */}
@@ -796,11 +841,10 @@ export default function MostWantedEvents(): React.ReactElement {
                       {/* Botones con mejor diseño */}
                     <div className="flex gap-2 w-full justify-center mt-2">
                       <button 
-                        onClick={(e) => {
+                        onClick={async (e) => {
                           e.stopPropagation();
-                          // Solo navegar a compra si no está agotado
                           if (!isEventoAgotado(eventoActual)) {
-                            navigateWithLogging(navigate, `/eventos/${eventoActual._id}?action=comprar`, eventoActual._id);
+                            await handleCompraDirecta(eventoActual);
                           }
                         }}
                         disabled={isEventoAgotado(eventoActual)}
