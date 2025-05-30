@@ -57,29 +57,23 @@ export default function MostWantedEvents(): React.ReactElement {
   const { user } = useUserContext();
   const navigate = useNavigate();
 
-  // Obtener SIEMPRE la ciudad actualizada del usuario desde la base de datos
+  // Obtener la ciudad del usuario del localStorage o del perfil SOLO si no está ya en el estado
   useEffect(() => {
-    async function fetchCiudadUsuario() {
-      if (!user) return;
-      try {
-        // Llamada directa al backend para obtener el perfil actualizado
-        const apiUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
-        // Usar siempre authAxios para usuarios autenticados
-        const res = await authAxios.get(`${apiUrl}/usuarios/perfil`);
-        if (res.data && (res.data.ciudad || res.data.ubicacion)) {
-          // Preferir ciudad, si no, ubicacion
-          const ciudadBD = res.data.ciudad || res.data.ubicacion;
-          setCiudad(ciudadBD);
-          localStorage.setItem('clubly_ciudad_usuario', ciudadBD);
-        } else {
-          setCiudad('');
-        }
-      } catch (e) {
-        setCiudad('');
-      }
+    // Si ya hay ciudad en el estado, no hacer nada
+    if (ciudad) return;
+    // 1. Intentar localStorage
+    const ciudadGuardada = localStorage.getItem('clubly_ciudad_usuario');
+    if (ciudadGuardada) {
+      setCiudad(ciudadGuardada);
+      return;
     }
-    fetchCiudadUsuario();
-  }, [user && user.email]);
+    // 2. Intentar userContext
+    if (user && (user.ciudad || user.ubicacion)) {
+      setCiudad((user.ciudad || user.ubicacion) ?? '');
+      localStorage.setItem('clubly_ciudad_usuario', (user.ciudad || user.ubicacion) ?? '');
+    }
+  }, [user, ciudad]);
+
   // Cargar eventos destacados por ciudad
   useEffect(() => {
     async function cargarEventosDestacados() {
