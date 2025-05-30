@@ -10,13 +10,13 @@ const faqs: FaqItem[] = [
   {
     question: "¿Qué es Clubly?",
     answer: (
-      <p>Clubly es una plataforma que conecta amantes de la música electrónica con clubs, eventos y DJs. Te permite descubrir eventos, comprar entradas y seguir a tus artistas favoritos, todo en un mismo lugar.</p>
+      <p>Clubly es una plataforma que conecta a los amantes del ocio nocturno con clubs, eventos y DJs de todo tipo. Descubre eventos, compra entradas y sigue a tus artistas o locales favoritos, todo en un mismo lugar.</p>
     )
   },
   {
     question: "¿Cómo compro entradas para un evento?",
     answer: (
-      <p>Para comprar entradas, primero crea una cuenta o inicia sesión. Luego, navega a la página del evento que te interesa y haz clic en "Comprar entradas". Selecciona la cantidad y sigue los pasos del proceso de pago seguro.</p>
+      <p>Para comprar entradas, primero crea una cuenta o inicia sesión. Luego, navega a la página del evento que te interesa y haz clic en "Comprar entradas". Elige el tipo de entrada disponible y sigue los pasos del proceso de pago seguro.</p>
     )
   },
   {
@@ -38,9 +38,9 @@ const faqs: FaqItem[] = [
     )
   },
   {
-    question: "¿Qué hago si tengo problemas con mi entrada o pago?",
+    question: "¿Es seguro el pago en Clubly?",
     answer: (
-      <p>Si experimentas algún problema con tu compra o pago, dirígete a la sección de "Soporte" en tu perfil o contáctanos directamente a través de nuestro formulario de contacto. Nuestro equipo estará encantado de ayudarte lo antes posible.</p>
+      <p>Tu seguridad es nuestra prioridad. Todos los pagos en Clubly se procesan a través de plataformas seguras y cifradas, garantizando la protección de tus datos y transacciones.</p>
     )
   }
 ];
