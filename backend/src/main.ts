@@ -23,6 +23,7 @@ async function bootstrap() {
     origin: (origin, callback) => {
       const allowedOrigins = [
         'http://localhost:5173',
+        'https://clubly-dun.vercel.app', // Dominio principal de producción
       ];
       // Permite cualquier subdominio de clubly en vercel.app
       const vercelRegex = /^https:\/\/clubly-[a-z0-9-]+-julens-projects-2e33d71b\.vercel\.app$/;
