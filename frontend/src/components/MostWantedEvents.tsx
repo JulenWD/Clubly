@@ -106,9 +106,6 @@ const FIRE_ICONS = [
   { id: 81, size: 47, rotate: -10, left: "75%", bottom: "49%", opacity: 0.06, color: '#fff700', zIndex: 0 },
 ];
 
-// Rotaciones definidas para las tarjetas, ligeras pero consistentes
-const CARD_ROTATIONS = [-1.2, 0.8, -0.9];
-
 // Función auxiliar para navegar con logging para debugging
 const navigateWithLogging = (navigate: NavigateFunction, path: string, eventId?: string): void => {
   console.log(`Navegando a: ${path} (Evento ID: ${eventId || 'no disponible'})`);

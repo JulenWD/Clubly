@@ -52,29 +52,22 @@ export class PagoService {
         const entradaSeleccionada = evento.entradas.find(
             (entrada) => entrada.tipo === tipoEntrada,
         );
-        console.log('Tipo de entrada recibido:', tipoEntrada);
-        console.log('Entradas configuradas en el evento:', evento.entradas);
-        console.log('Entrada seleccionada:', entradaSeleccionada);
 
         if (!entradaSeleccionada) {
             throw new Error('Tipo de entrada no válido');
         }
 
         const entradasVendidas = await this.entradaModel.countDocuments({ eventoId: evento._id, tipoEntrada });
-        console.log('Entradas vendidas:', entradasVendidas);
         let precioFinal: number | null = null;
         let acumulado = 0;
         for (const tramo of entradaSeleccionada.tramos) {
             acumulado += tramo.hasta;
-            console.log('Revisando tramo:', tramo, 'Acumulado:', acumulado);
             if (entradasVendidas < acumulado) {
                 precioFinal = tramo.precio;
-                console.log('Tramo seleccionado:', tramo, 'Precio final:', precioFinal);
                 break;
             }
         }
         if (precioFinal === null || precioFinal <= 0) {
-            console.error('Error: El precio de la entrada es 0 o no se ha encontrado un tramo válido.');
             throw new Error('El precio de la entrada debe ser mayor que 0');
         }
 
@@ -86,7 +79,6 @@ export class PagoService {
 
         const frontendUrl = this.configService.get<string>('FRONTEND_URL');
         if (!frontendUrl || !/^https?:\/\//.test(frontendUrl)) {
-            console.error('FRONTEND_URL no está definida correctamente:', frontendUrl);
             throw new Error('Configuración incorrecta: FRONTEND_URL debe estar definida y empezar por http(s)://');
         }
         const cancelUrl = `${frontendUrl}/pago-cancelado?evento=${encodeURIComponent(evento.nombre)}`;
@@ -129,13 +121,11 @@ export class PagoService {
     async registrarEntradaExitosa(email: string, eventoId: string, tipoEntrada: string) {
         const usuario = await this.usuarioModel.findOne({ email });
         if (!usuario) {
-            console.error(`Usuario no encontrado durante registro de entrada`);
             throw new Error('Usuario no encontrado');
         }
         
         const evento = await this.eventoModel.findById(eventoId);
         if (!evento) {
-            console.error(`Evento no encontrado durante registro de entrada`);
             throw new Error('Evento no encontrado');
         }
         
@@ -144,7 +134,6 @@ export class PagoService {
             eventoId: evento._id,
             tipoEntrada,
         });        if (yaExiste) {
-            console.log(`Entrada ya existe para este usuario y evento`);
             return;
         }
 
@@ -161,7 +150,6 @@ export class PagoService {
                 break;
             }
         }        if (precioFinal === null) {
-            console.error('No hay tramos disponibles para este tipo de entrada');
             throw new Error('No hay tramos disponibles para este tipo de entrada');
         }
           try {
@@ -173,29 +161,23 @@ export class PagoService {
                 precioPagado: precioFinal,
             });
             
-            console.log('Guardando nueva entrada');
             const entradaGuardada = await nuevaEntrada.save();
             
             if (!evento.asistentes.includes(usuario._id)) {
                 evento.asistentes.push(usuario._id);
                 await evento.save();
-                console.log('Evento actualizado con nuevo asistente');
             }
-              console.log('Entrada creada correctamente');
             
             if (evento.clubId) {
                 try {
                     const clubId = typeof evento.clubId === 'object' ? evento.clubId.toString() : evento.clubId;
                     await this.clubService.calculateAndUpdatePriceRange(clubId);
-                    console.log(`Rango de precios del club ${clubId} actualizado tras la compra`);
                 } catch (priceRangeError) {
-                    console.error('Error al actualizar el rango de precios del club:', priceRangeError);
                 }
             }
             
             return entradaGuardada;
         } catch (error) {
-            console.error('Error al guardar la entrada:', error);
             throw new Error(`Error al registrar entrada: ${error.message}`);
         }
     }

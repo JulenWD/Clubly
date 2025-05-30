@@ -36,9 +36,7 @@ export class PagosController {
         const rawBody = req.body;
         if (!Buffer.isBuffer(rawBody)) {
             console.error('El body recibido en el webhook NO es un Buffer. Esto causará fallo de firma Stripe. Tipo:', typeof rawBody);
-        } else {
-            console.log('El body recibido en el webhook es un Buffer.');
-        }
+        } 
         let event: Stripe.Event;
 
         try {
@@ -47,14 +45,12 @@ export class PagosController {
                 signature,
                 endpointSecret,
             );
-            console.log('Webhook recibido de Stripe:', event.type, JSON.stringify(event.data.object));
         } catch (err) {
             console.error('Error verificando webhook de Stripe:', err.message);
             return { error: 'Invalid webhook signature', status: 'failed' };
         }
 
         if (event.type !== 'checkout.session.completed') {
-            console.log('Evento de Stripe ignorado:', event.type);
             return { received: true };
         }
 
@@ -64,7 +60,6 @@ export class PagosController {
             metadata: session.metadata,
             customerEmail: session.customer_email
         };
-        console.log('Datos de la sesión de Stripe:', sessionData);
 
         const eventoId = session.metadata?.eventoId;
         const tipoEntrada = session.metadata?.tipoEntrada;
@@ -81,7 +76,6 @@ export class PagosController {
                 eventoId,
                 tipoEntrada,
             );
-            console.log('Resultado de registrarEntradaExitosa:', entradaRegistrada);
             return {
                 received: true,
                 success: true,
